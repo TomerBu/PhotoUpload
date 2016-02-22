@@ -15,15 +15,42 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+
+
+
+function fileAccess(filepath) {
+	return new Promise((resolve, reject) => {
+		fs.access(filepath, fs.F_OK, error => {
+			if(!error) {
+				resolve(filepath);
+			} else {
+				reject(error);
+			}
+		});
+	});
+}
+
+function streamFile(filepath) {
+	return new Promise((resolve, reject) => {
+		var fileStream = fs.createReadStream(filepath);
+
+		fileStream.on('open', () => {
+			resolve(fileStream);
+		});
+
+		fileStream.on('error', error => {
+			reject(error);
+		});
+	});
+}
+
 router.get('/myimage', function(req, res){
-	// We need the fs module so that we can write the stream to a file
-	// Set the file name for WriteStream
-	var file = fs.createWriteStream('slash-s3.jpg');
-	knoxClient.getFile('0EMJX3h9p0YF-1DDhUOwL9Gb.jpg', function(err, res) {
-	    res.on('data', function(data) { file.write(data); });
-	    res.on('end', function(chunk) { file.end(); });
+	knoxClient.getFile('Ocb-PxlncNoSYFY3IWLfZVH1.jpg', function(err, imageStream) {
+	     imageStream.pipe(res);
 	});
 })
+
+
 
 
 var multipart = require('connect-multiparty');
@@ -47,7 +74,7 @@ router.post('/upload', multipartMiddleware, function(req, res) {
 
 	  request.on('response', function(resp){
 	  	if (resp.statusCode == 200) {
-	  		res.json({'success':true});
+	  		res.json({'success':true, filename:fname});
 	  	}
 	  	else res.json({success:false});
 	  });
