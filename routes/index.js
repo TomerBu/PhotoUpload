@@ -15,6 +15,16 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/myimage', function(req, res){
+	// We need the fs module so that we can write the stream to a file
+	// Set the file name for WriteStream
+	var file = fs.createWriteStream('slash-s3.jpg');
+	knoxClient.getFile('0EMJX3h9p0YF-1DDhUOwL9Gb.jpg', function(err, res) {
+	    res.on('data', function(data) { file.write(data); });
+	    res.on('end', function(chunk) { file.end(); });
+	});
+})
+
 
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart({ uploadDir: './public/images' });
@@ -34,7 +44,7 @@ router.post('/upload', multipartMiddleware, function(req, res) {
 	  }, function(err, result){
 	  		console.log(result, err);
 	  });
-	  
+
 	  request.on('response', function(resp){
 	  	if (resp.statusCode == 200) {
 	  		res.json({'success':true});
