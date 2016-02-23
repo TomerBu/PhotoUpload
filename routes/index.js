@@ -5,53 +5,19 @@ var express = require('express'),
 	path = require('path'),
 	fs = require('fs');
 
-var knoxClient = knox.createClient({
-	key:config.AWS_S3_KEY,
-	secret:config.AWS_S3_SECRET,
-	bucket:config.AWS_S3_BUCKET
-});
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
 
-
-
-function fileAccess(filepath) {
-	return new Promise((resolve, reject) => {
-		fs.access(filepath, fs.F_OK, error => {
-			if(!error) {
-				resolve(filepath);
-			} else {
-				reject(error);
-			}
-		});
-	});
-}
-
-function streamFile(filepath) {
-	return new Promise((resolve, reject) => {
-		var fileStream = fs.createReadStream(filepath);
-
-		fileStream.on('open', () => {
-			resolve(fileStream);
-		});
-
-		fileStream.on('error', error => {
-			reject(error);
-		});
-	});
-}
-
-router.get('/myimage', function(req, res){
-	knoxClient.getFile('Ocb-PxlncNoSYFY3IWLfZVH1.jpg', function(err, imageStream) {
-	     imageStream.pipe(res);
-	});
-})
-
-
-
+//uploading the pothos to s3 using knox & connect-multiparty:
+var knoxClient = knox.createClient({
+	key:config.AWS_S3_KEY,
+	secret:config.AWS_S3_SECRET,
+	bucket:config.AWS_S3_BUCKET
+});
 
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart({ uploadDir: './public/images' });
@@ -80,6 +46,11 @@ router.post('/upload', multipartMiddleware, function(req, res) {
 	  });
 });
  
-
+//getting an image
+router.get('/myimage', function(req, res){
+	knoxClient.getFile('Ocb-PxlncNoSYFY3IWLfZVH1.jpg', function(err, imageStream) {
+	     imageStream.pipe(res);
+	});
+});
 
 module.exports = router;
