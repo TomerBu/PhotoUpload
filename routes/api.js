@@ -31,10 +31,17 @@ var formidableMiddleware = formidable.parse({keepExtensions:true, uploadDir:'../
 
 
 router.post('/upload', function(req, res) {
-  var userId = req.body.userId;
-  var userIDParam = mysql.escape(userId);
+  // var userId = req.body.userId;
+  // var userIDParam = mysql.escape(userId);
 
-  var file = req.body.fileUpload;
+  // var file = req.body.fileUpload;
+
+  var userID = req.body.user;
+  var userIDParam = mysql.escape(userID);
+
+  var file = req.files.fileUpload;
+
+  
   console.log(file.name);
 
   var ftype = file.type;
