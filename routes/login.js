@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var config = require('../config/config.js');
+var config = require('../configd/config.js');
 var jwt = require('jsonwebtoken');
 //Database access to RDS MySql using mysql npm module
 var mysql = require("mysql");
