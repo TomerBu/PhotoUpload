@@ -11,7 +11,13 @@ var api = require('./routes/api');
 
 var app = express();
 var formidable = require('express-formidable');
-var formidableMiddleware = formidable.parse({keepExtensions:true, uploadDir:__dirname +'./public/images'}); 
+var p = path.join(__dirname, 'public', 'images');
+
+app.get('test', (req, res)=>{
+  res.end(p);
+});
+
+var formidableMiddleware = formidable.parse({keepExtensions:true, uploadDir:p}); 
 
 // var multipart = require('connect-multiparty');
 // var multipartMiddleware = multipart({ uploadDir: './public/images' });
