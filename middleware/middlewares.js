@@ -1,6 +1,6 @@
 //Auth Middleware Must be used before all other routes
 var jwt = require('jsonwebtoken');
-var config = require('../config/config.js');
+var config = require('../configd/config.js');
 
 module.exports = {
   tokenVerifier: function(req, res, next) {
