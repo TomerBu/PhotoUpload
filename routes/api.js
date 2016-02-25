@@ -27,7 +27,7 @@ var knoxClient = knox.createClient({
 router.use(middlewares.tokenVerifier);
 
 var formidable = require('express-formidable');
-var formidableMiddleware = formidable.parse({keepExtensions:true, uploadDir:'./public/images'}); 
+var formidableMiddleware = formidable.parse({keepExtensions:true, uploadDir:'../public/images'}); 
 
 
 router.post('/upload', function(req, res) {
