@@ -25,11 +25,6 @@ var knoxClient = knox.createClient({
 
 //Auth Middleware Must be used before all other routes
 router.use(middlewares.tokenVerifier);
-
-var formidable = require('express-formidable');
-var formidableMiddleware = formidable.parse({keepExtensions:true, uploadDir:'../public/images'}); 
-
-
 router.post('/upload', function(req, res) {
   // var userId = req.body.userId;
   // var userIDParam = mysql.escape(userId);
@@ -41,7 +36,7 @@ router.post('/upload', function(req, res) {
 
   var file = req.files.fileUpload;
 
-  
+
   console.log(file.name);
 
   var ftype = file.type;
