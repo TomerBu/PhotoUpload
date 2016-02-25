@@ -26,17 +26,10 @@ var knoxClient = knox.createClient({
 //Auth Middleware Must be used before all other routes
 router.use(middlewares.tokenVerifier);
 router.post('/upload', function(req, res) {
-  // var userId = req.body.userId;
-  // var userIDParam = mysql.escape(userId);
+  var userId = req.body.userId;
+  var userIDParam = mysql.escape(userId);
 
-  // var file = req.body.fileUpload;
-
-  var userID = req.body.user;
-  var userIDParam = mysql.escape(userID);
-
-  var file = req.files.fileUpload;
-
-
+  var file = req.body.fileUpload;
   console.log(file.name);
 
   var ftype = file.type;

@@ -14,7 +14,7 @@ var formidable = require('express-formidable');
 var imagesPath = path.join(__dirname, 'public', 'images');
  
 
-var formidableMiddleware = formidable.parse({keepExtensions:true}); 
+//var formidableMiddleware = formidable.parse({keepExtensions:true}); 
 
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart({});
@@ -26,7 +26,7 @@ app.set('view engine', 'hbs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(multipartMiddleware);
+app.use(formidableMiddleware);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
