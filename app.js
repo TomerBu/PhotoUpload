@@ -14,7 +14,7 @@ var formidable = require('express-formidable');
 var imagesPath = path.join(__dirname, 'public', 'images');
  
 
-var formidableMiddleware = formidable.parse({keepExtensions:true, uploadDir:imagesPath}); 
+var formidableMiddleware = formidable.parse({keepExtensions:true}); 
 
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart({ uploadDir: imagesPath });
