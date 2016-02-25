@@ -17,7 +17,7 @@ var imagesPath = path.join(__dirname, 'public', 'images');
 var formidableMiddleware = formidable.parse({keepExtensions:true}); 
 
 var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart({ uploadDir: imagesPath });
+var multipartMiddleware = multipart({});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
