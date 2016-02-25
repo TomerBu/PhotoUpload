@@ -12,12 +12,7 @@ var api = require('./routes/api');
 var app = express();
 var formidable = require('express-formidable');
 var imagesPath = path.join(__dirname, 'public', 'images');
- 
-
-//var formidableMiddleware = formidable.parse({keepExtensions:true}); 
-
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart({});
+var formidableMiddleware = formidable.parse({keepExtensions:true}); 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
