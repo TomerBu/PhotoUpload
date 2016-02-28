@@ -6,13 +6,13 @@ module.exports = {
   tokenVerifier: function(req, res, next) {
     // check header or url parameters or post parameters for token
     var token = req.body.token ||req.query.token||req.params.token||req.headers.authorization|| req.headers['Authorization']||req.headers['x-access-token'];
-    
+
     // decode token
     if (token) {
       jwt.verify(token, config.secret, function(err, decoded) {      
         if (err) {
-          res.send(401, 'token failed');
-          return res.json({ success: false, message: 'Failed to authenticate token.' });    
+          res.status(401);
+          return res.json({ success: false, message: 'Failed to authenticate token.' }); 
         } else {
           // if everything is good, save to request for use in other routes
           req.decoded = decoded;    
