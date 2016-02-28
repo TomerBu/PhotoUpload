@@ -6,7 +6,8 @@ module.exports = {
   tokenVerifier: function(req, res, next) {
     // check header or url parameters or post parameters for token
     var token = req.body.token ||req.query.token||req.params.token|| req.headers['x-access-token'] || req.headers['Authorization'];
-
+    if(!token)
+      console.error('Failed to aquire token');
     // decode token
     if (token) {
       jwt.verify(token, config.secret, function(err, decoded) {      
