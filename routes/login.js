@@ -17,7 +17,7 @@ var pool = mysql.createPool({
 //post request to get a token
 router.post('/auth', function(req, res){
 	// find the user
-	console.log(req.body);
+	//console.log(req.body);
 	if (!req.body) {res.json({sucess:false, message:'Auth Failed No Params'});return}
 	var name = req.body.name, pass = req.body.pass;
 	if (!name || !pass) {res.json({sucess:false, message:'Auth Failed No Params'});return}
