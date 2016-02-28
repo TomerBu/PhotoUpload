@@ -19,7 +19,7 @@ router.post('/auth', function(req, res){
 	// find the user
 	//console.log(req.body);
   console.log("your in auth");
-  
+
 	if (!req.body) {res.json({sucess:false, message:'Auth Failed No Params'});return}
 	var name = req.body.name, pass = req.body.pass;
 	if (!name || !pass) {res.json({sucess:false, message:'Auth Failed No Params'});return}
@@ -40,7 +40,7 @@ router.post('/auth', function(req, res){
   			res.json({sucess:true, token:token, message: 'Enjoy'});
   		}
   	});
-  	console.log(q);
+  	//console.log(q);
   });
 });
 
