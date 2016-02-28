@@ -25,6 +25,8 @@ var knoxClient = knox.createClient({
 
 //Auth Middleware Must be used before all other routes
 router.use(middlewares.tokenVerifier);
+
+
 router.post('/upload', function(req, res) {
   var userId = req.body.userId;
   var userIDParam = mysql.escape(userId);
