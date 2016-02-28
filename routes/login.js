@@ -33,7 +33,7 @@ router.post('/auth', function(req, res){
   		}
   		else{
   			var token = jwt.sign(rows[0], config.secret, {
-  				expiresInMinutes: 1440 //24 hours
+  				expiresIn: 60*60*24 //24 hours
   			});
   			res.json({sucess:true, token:token, message: 'Enjoy'});
   		}
