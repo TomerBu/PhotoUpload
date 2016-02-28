@@ -28,7 +28,8 @@ router.use(middlewares.tokenVerifier);
 
 
 router.post('/upload', function(req, res) {
-  console.error("Your in upload");
+  console.error(req.headers);
+  
   var userId = req.body.userId;
   var userIDParam = mysql.escape(userId);
 
