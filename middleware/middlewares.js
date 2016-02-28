@@ -8,6 +8,7 @@ module.exports = {
     var token = req.body.token ||req.query.token||req.params.token|| req.headers['x-access-token'] || req.headers['Authorization'];
     if(!token)
       console.error('Failed to aquire token');
+      console.error(req.headers);
     // decode token
     if (token) {
       jwt.verify(token, config.secret, function(err, decoded) {      
