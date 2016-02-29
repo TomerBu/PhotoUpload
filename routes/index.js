@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
 
 router.get('/passdemo/:pass', (req, res)=>{
 	var pass = req.params.pass;
-	if (!pass) {res.json('sucess':false, descrition:'no password in query');}
+	if (!pass) {res.json({'sucess':false, descrition:'no password in query'});}
 	var start = new Date();
 	//https://www.npmjs.com/package/bcrypt
 	bcrypt.genSalt(14, function(err, salt) {
