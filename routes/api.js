@@ -89,13 +89,10 @@ router.post('/newUser', (req, res)=>{
     if (!user||!pass||!phone) {return res.json({'sucess':false, description:'missing params'});}
     bcrypt.genSalt(14, function(err, salt) {
       if (err) throw err;
-      // execution time 
-      var end = new Date() - start;
       bcrypt.hash(pass, salt, function(err, hash) {
       // Store hash in your password DB.
       saveNewUser(user, phone, pass, (err, userId)=>{
         if (err) {throw err;}
-        console.log('Execution time: %dms', end);
         res.json({'sucess':true, userId:userId});
       });
     });
