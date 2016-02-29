@@ -4,7 +4,8 @@ var config = require('../configd/config.js');
 var jwt = require('jsonwebtoken');
 //Database access to RDS MySql using mysql npm module
 var mysql = require("mysql");
-
+//hash and salt your passwords:
+var bcrypt = require('bcrypt');
 // First you need to create a connection to the db
 var pool = mysql.createPool({
   host: config.dbHost,
@@ -44,6 +45,41 @@ router.post('/auth', function(req, res){
   });
 });
 
+
+router.post('/newUser', req, res()=>{
+    var user = req.params.user;
+    var phone = req.params.phone;
+    var pass = req.params.pass;
+
+    if (!user||!pass||!secret) {return res.json({'sucess':false, description:'no credentials'});}
+    bcrypt.genSalt(14, function(err, salt) {
+      if (err) throw err;
+      // execution time 
+      var end = new Date() - start;
+      bcrypt.hash(pass, salt, function(err, hash) {
+      // Store hash in your password DB.
+      saveNewUser(user, phone, pass, (err, userId)=>{
+        if (err) {throw err;}
+        console.log('Execution time: %dms', end);
+        res.json({'sucess':true, userId:userId});
+      });
+    });
+  });
+});
+//callback(err, insertId)
+//response: {id:<userId>}
+function saveNewUser(userName, phone, pass, callback){
+  pool.getConnection((err, con)=>{
+    if (err) {callback(err, null);}
+
+      var user = {phone:phone, name:userName, pass:pass};
+      con.query("INSERT INTO User SET ?", user, (err, result)=>{
+        if (err) {callback(err, null);}
+        callback(null, result.insertId);
+        con.release;
+      });
+  });
+}
 
 
 module.exports = router;
