@@ -9,11 +9,11 @@ router.get('/', function(req, res) {
 });
 
 
-router.get('/homester/:pass', (req, res)=>{
+router.get('/passdemo/:pass', (req, res)=>{
 	var pass = req.query.pass;
-	console.log('pass');
+	console.log(pass);
 	var start = new Date();
-	
+
 	bcrypt.genSalt(14, function(err, salt) {
 		//hash(data, salt, progress, cb)
 	    bcrypt.hash(pass, salt, progressCallback, function(err, hash) {
@@ -22,6 +22,7 @@ router.get('/homester/:pass', (req, res)=>{
 		// execution time 
 	    var end = new Date() - start;
 	    console.info("Execution time: %dms", end);
+	    res.json({'sucess':true});
 	    });
 	});
 });
