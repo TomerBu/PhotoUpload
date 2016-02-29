@@ -21,24 +21,28 @@ router.post('/auth', function(req, res){
 	//console.log(req.body);
   console.log("your in auth");
 
-	if (!req.body) {res.json({sucess:false, message:'Auth Failed No Params'});return}
+	if (!req.body) {return res.json({sucess:false, message:'Auth Failed No Params'});}
 	var name = req.body.name, pass = req.body.pass;
-	if (!name || !pass) {res.json({sucess:false, message:'Auth Failed No Params'});return}
+	if (!name || !pass) {return res.json({sucess:false, message:'Auth Failed No Params'});}
 
     pool.getConnection((err, con)=>{
   	if (err) {throw err;}
-  	var q = con.query('SELECT * FROM User WHERE name = ?', [req.body.name], (err, rows)=>{
+  	var q = con.query('SELECT * FROM Admin WHERE name = ?', [req.body.name], (err, rows)=>{
   		if (err) {throw err;}
   		con.release();
-  		if (!rows || !rows[0]) {res.json({sucess:false, message:'Auth Failed No Such User'});}
-  		else if (rows[0].pass != req.body.pass) {
-  			res.json({sucess:false, message:'Auth Failed Wrong pass'});
-  		}
-  		else{
-  			var token = jwt.sign(rows[0], config.secret, {
-  				expiresIn: '1 days' //24 hours
-  			});
-  			res.json({sucess:true, token:token, message: 'Enjoy'});
+  		if (!rows || !rows[0]) {res.json({sucess:false, message:'Auth Failed, Wrong credentials'});}
+  		else {
+        bcrypt.compare(pass, rows[0].pass, (err, result)=>{
+          if (result == true) {
+            var token = jwt.sign(rows[0], config.secret, {
+              expiresIn: '1 days' //24 hours
+            });
+            res.json({sucess:true, token:token, message: 'Enjoy'});
+          }else{
+            res.json({sucess:false, message:'Auth Failed, Wrong credentials'});
+          }
+        })
+  			
   		}
   	});
   	//console.log(q);
