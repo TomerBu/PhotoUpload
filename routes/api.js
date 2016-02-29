@@ -82,9 +82,9 @@ router.get('/images/:userId', (req, res)=>{
 });
 
 router.post('/newUser', (req, res)=>{
-    var user = req.params.user;
-    var phone = req.params.phone;
-    var pass = req.params.pass;
+    var user = req.body.user;
+    var phone = req.body.phone;
+    var pass = req.body.pass;
 
     if (!user||!pass||!phone) {return res.json({'sucess':false, description:'missing params'});}
     bcrypt.genSalt(14, function(err, salt) {
