@@ -17,7 +17,7 @@ router.get('/passdemo/:pass', (req, res)=>{
 	bcrypt.genSalt(14, function(err, salt) {
 		//hash(data, salt, progress, cb)
 		if (err) {throw err;}
-	    bcrypt.hash(pass, salt, progressCallback, function(err, hash) {
+	    bcrypt.hash(pass, salt, function(err, hash) {
 	        // Store hash in your password DB.
 	    console.log('hash: ', hash);
 		// execution time 
