@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 
 
 router.get('/passdemo/:pass', (req, res)=>{
-	var pass = req.query.pass;
+	var pass = req.params.pass;
 	console.log(pass);
 	var start = new Date();
 
