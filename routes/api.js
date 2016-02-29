@@ -91,7 +91,7 @@ router.post('/newUser', (req, res)=>{
       if (err) throw err;
       bcrypt.hash(pass, salt, function(err, hash) {
       // Store hash in your password DB.
-      saveNewUser(user, phone, pass, (err, userId)=>{
+      saveNewUser(user, phone, hash, (err, userId)=>{
         if (err) {throw err;}
         res.json({'sucess':true, userId:userId});
       });
