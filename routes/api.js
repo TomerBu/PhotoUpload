@@ -6,6 +6,7 @@ var mysql = require("mysql");
 var knox = require('knox');
 var fs = require('fs');
 var path = require('path');
+var bcrypt = require('bcrypt');
 
 // First you need to create a connection to the db
 var pool = mysql.createPool({
